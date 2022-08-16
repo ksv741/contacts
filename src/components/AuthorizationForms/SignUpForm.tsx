@@ -1,8 +1,9 @@
 import { LoadingButton } from '@mui/lab';
-import { Button, CircularProgress } from '@mui/material';
+import { Button } from '@mui/material';
 import React, { useState } from 'react';
-import { useAppSelector } from '../../hooks/redux';
+import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import useValidate from '../../hooks/useValidate';
+import { signUpUser } from '../../store/reducers/auth';
 import { emailRegExp } from '../../utils/constants';
 import ValidateInput, { ValidateInputState } from '../ValidateInput';
 
@@ -39,11 +40,14 @@ const SignUpForm = () => {
   });
 
   const isFormValid = useValidate(email.valid, password.valid, repeatedPassword.valid);
+  const dispatch = useAppDispatch();
   const { isLoading } = useAppSelector(state => state.auth);
 
   function signUpHandler(e: React.FormEvent) {
     e.preventDefault();
     if (!isFormValid) return;
+
+    dispatch(signUpUser({email: email.value, password: password.value}));
   }
 
   return (

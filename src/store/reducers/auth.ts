@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
-import { IContact } from '../../types/Contact';
+import { v4 as uuid } from 'uuid';
 import { IUser } from '../../types/User';
 
 interface AuthState {
@@ -33,6 +33,27 @@ export const signInUser = createAsyncThunk<
   }
 )
 
+export const signUpUser = createAsyncThunk<
+  {},
+  IUser,
+  {rejectValue: string}
+  >(
+  'auth/signUp',
+  async ({email, password}, thunkAPI) => {
+    try {
+      const response = await axios.post(`http://localhost:3000/users`, {
+        email,
+        password,
+        id: uuid(),
+        contacts: []
+      });
+      return true;
+    } catch (e) {
+      return thunkAPI.rejectWithValue("Ошибка при регистрации нового пользователя")
+    }
+  }
+)
+
 export const authSlice = createSlice({
   name: 'auth',
   initialState,
@@ -43,17 +64,31 @@ export const authSlice = createSlice({
     builder.addCase(signInUser.pending, (state) => {
       state.isLoading = true;
       state.error = false;
-    })
+    });
     builder.addCase(signInUser.fulfilled, (state, {payload}) => {
       if (payload.password === payload.data.password) state.isAuth = true;
       else state.error = 'Неправильный пароль';
       state.isLoading = false;
-    })
+    });
     builder.addCase(signInUser.rejected, (state, {payload}) => {
       state.isAuth = false;
       state.isLoading = false;
       state.error = payload || true;
-    })
+    });
+
+    builder.addCase(signUpUser.pending, (state) => {
+      state.isLoading = true;
+      state.error = false;
+    });
+    builder.addCase(signUpUser.fulfilled, (state) => {
+      state.isAuth = true;
+      state.isLoading = false;
+    });
+    builder.addCase(signUpUser.rejected, (state, {payload}) => {
+      state.isAuth = false;
+      state.isLoading = false;
+      state.error = payload || true;
+    });
   }
 })
 
