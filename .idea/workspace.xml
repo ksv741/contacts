@@ -1,8 +1,79 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="b194e7ff-76ad-4232-b6de-1d8c253de566" name="Changes" comment="add sig in and sign up pages">
+      <change afterPath="$PROJECT_DIR$/src/components/AuthorizationForms/SignInForm.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/AuthorizationForms/SignUpForm.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/ValidateInput.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/hooks/useValidate.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pages/Authorization/Authorization.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pages/Authorization/Authorization.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/types/Validator.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/utils/constants.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/utils/validator.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/public/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Authorization.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Contacts.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Contacts/Contacts.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/router/authRoutes.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/router/authRoutes.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/router/publicRoutes.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/router/publicRoutes.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/store/reducers/auth.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/reducers/auth.ts" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ComposerSettings">
+    <execution />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
     <option name="sortByType" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ts.external.directory.path": "C:\\Users\\Sergey\\Projects\\Others\\takeoff-test\\node_modules\\typescript\\lib"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Sergey\Projects\Others\takeoff-test\src\pages\Contacts" />
+      <recent name="C:\Users\Sergey\Projects\Others\takeoff-test\src\pages\Authorization" />
+    </key>
+  </component>
+  <component name="TaskManager">
+    <task id="LOCAL-00001" summary="create base of project">
+      <created>1660622643240</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1660622643240</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
+    <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="create base of project" />
+    <MESSAGE value="add sig in and sign up pages" />
+    <option name="LAST_COMMIT_MESSAGE" value="add sig in and sign up pages" />
   </component>
 </project>

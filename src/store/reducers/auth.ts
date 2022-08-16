@@ -7,7 +7,7 @@ interface AuthState {
 }
 
 const initialState: AuthState = {
-  isAuth: true,
+  isAuth: false,
   isLoading: false,
   error: false,
 }

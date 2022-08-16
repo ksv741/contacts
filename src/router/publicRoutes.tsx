@@ -1,6 +1,6 @@
 import React from 'react';
 import { Navigate, Route } from 'react-router-dom';
-import Authorization from '../pages/Authorization';
+import Authorization from '../pages/Authorization/Authorization';
 
 export const publicRoutes = () => (
   <>
