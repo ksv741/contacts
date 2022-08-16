@@ -1,0 +1,30 @@
+{
+  "users": [
+    {
+      "email": "ksv741@mail.ru",
+      "password": "123123",
+      "contacts": [
+        {
+          "name": "Vladimir",
+          "surname": "Vladimir",
+          "phone": "88005553535",
+          "email": "putin@mail.ru",
+          "id": "president-of-russia"
+        }
+      ]
+    },
+    {
+      "email": "test@mail.ru",
+      "password": "123123",
+      "contacts": [
+        {
+          "name": "Barack",
+          "surname": "Obama",
+          "phone": "+1800500123",
+          "email": "obama@gmail.com",
+          "id": "president-of-usa"
+        }
+      ]
+    }
+  ]
+}

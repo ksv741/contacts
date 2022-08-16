@@ -20,8 +20,9 @@ interface ValidateInputProps {
   validateItem: ValidateInputState;
   validateRules: ValidatorRules;
   changeItem: Dispatch<React.SetStateAction<ValidateInputState>>
+  disabled?: boolean;
 }
-const ValidateInput: React.FC<ValidateInputProps> = ({validateItem, validateRules, changeItem}) => {
+const ValidateInput: React.FC<ValidateInputProps> = ({validateItem, validateRules, changeItem, disabled}) => {
   const {helperText, errorText, error, valid, touched, label, type, color, value} = validateItem;
 
   function inputChangeHandler(e: React.ChangeEvent<HTMLInputElement>) {
@@ -51,6 +52,7 @@ const ValidateInput: React.FC<ValidateInputProps> = ({validateItem, validateRule
       inputProps={{
         autoComplete: 'new-password',
       }}
+      disabled={disabled}
     />
   );
 };

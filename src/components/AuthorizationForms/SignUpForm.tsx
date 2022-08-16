@@ -1,5 +1,7 @@
-import { Button } from '@mui/material';
+import { LoadingButton } from '@mui/lab';
+import { Button, CircularProgress } from '@mui/material';
 import React, { useState } from 'react';
+import { useAppSelector } from '../../hooks/redux';
 import useValidate from '../../hooks/useValidate';
 import { emailRegExp } from '../../utils/constants';
 import ValidateInput, { ValidateInputState } from '../ValidateInput';
@@ -37,6 +39,7 @@ const SignUpForm = () => {
   });
 
   const isFormValid = useValidate(email.valid, password.valid, repeatedPassword.valid);
+  const { isLoading } = useAppSelector(state => state.auth);
 
   function signUpHandler(e: React.FormEvent) {
     e.preventDefault();
@@ -45,11 +48,28 @@ const SignUpForm = () => {
 
   return (
     <form onSubmit={signUpHandler}>
-      <ValidateInput validateItem={email} validateRules={{required: true, testReg: emailRegExp}} changeItem={setEmail}/>
-      <ValidateInput validateItem={password} validateRules={{required: true, min: 3, max: 10 }} changeItem={setPassword}/>
-      <ValidateInput validateItem={repeatedPassword} validateRules={{required: true, toBe: password.value }} changeItem={setRepeatedPassword}/>
+      <ValidateInput
+        validateItem={email}
+        validateRules={{required: true, testReg: emailRegExp}}
+        changeItem={setEmail}
+        disabled={isLoading}
+      />
+      <ValidateInput
+        validateItem={password}
+        validateRules={{required: true, min: 3, max: 10 }}
+        changeItem={setPassword}
+        disabled={isLoading}
+      />
+      <ValidateInput
+        validateItem={repeatedPassword}
+        validateRules={{required: true, toBe: password.value }}
+        changeItem={setRepeatedPassword}
+        disabled={isLoading}
+      />
 
-      <Button variant="outlined" type='submit' disabled={!isFormValid}>Зарегистрироваться</Button>
+      <LoadingButton type='submit'  loading={isLoading} variant="outlined" disabled={!isFormValid || isLoading}>
+        Зарегистрироваться
+      </LoadingButton>
     </form>
   );
 };

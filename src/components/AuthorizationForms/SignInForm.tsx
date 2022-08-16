@@ -1,6 +1,9 @@
+import { LoadingButton } from '@mui/lab';
 import { Button } from '@mui/material';
 import React, { useState } from 'react';
+import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import useValidate from '../../hooks/useValidate';
+import { signInUser } from '../../store/reducers/auth';
 import { emailRegExp } from '../../utils/constants';
 import ValidateInput, { ValidateInputState } from '../ValidateInput';
 
@@ -26,18 +29,35 @@ const SignInForm:React.FC = () => {
     errorText: '',
   });
   const isFormValid = useValidate(email.valid, password.valid);
+  const dispatch = useAppDispatch();
+  const { isLoading } = useAppSelector(state => state.auth);
 
   function signInHandler(e: React.FormEvent) {
     e.preventDefault();
     if (!isFormValid) return;
+
+    dispatch(signInUser({email: email.value, password: password.value}));
   }
 
   return (
     <form onSubmit={signInHandler}>
-      <ValidateInput validateItem={email} validateRules={{required: true, testReg: emailRegExp}} changeItem={setEmail}/>
-      <ValidateInput validateItem={password} validateRules={{required: true, min: 3, max: 10 }} changeItem={setPassword}/>
+      <ValidateInput
+        validateItem={email}
+        validateRules={{required: true, testReg: emailRegExp}}
+        changeItem={setEmail}
+        disabled={isLoading}
+      />
+      <ValidateInput
+        validateItem={password}
+        validateRules={{required: true, min: 3, max: 10 }}
+        changeItem={setPassword}
+        disabled={isLoading}
+      />
 
-      <Button variant="outlined" disabled={!isFormValid} type='submit'>Войти</Button>
+      <LoadingButton type='submit' loading={isLoading} variant="outlined" disabled={!isFormValid || isLoading}>
+        Войти
+      </LoadingButton>
+
     </form>
   );
 };
