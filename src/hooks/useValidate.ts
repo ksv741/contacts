@@ -1,10 +1,23 @@
 import { useEffect, useState } from 'react';
+import { ValidateInputState } from '../components/ValidateInput';
 import validator from '../utils/validator';
 
-const UseValidate = (...params: boolean[]) => {
-  const [isFormValid, setIsFormValid] = useState(validator.validateResults(params));
+export const UseValidate = (...params: ValidateInputState[]) => {
+  const [isFormValid, setIsFormValid] = useState(false);
+  function check() {
+    return params.reduce((res, {value, rules}) => {
+      return rules
+        ? res && typeof validator.validateOne({value, rules}) === 'boolean'
+        : res;
+    }, true)
+  }
+
   useEffect(() => {
-    setIsFormValid(validator.validateResults(params));
+    setIsFormValid(check())
+  }, []);
+
+  useEffect(() => {
+    setIsFormValid(check())
   }, [params]);
 
   return isFormValid

@@ -1,6 +1,6 @@
 import { LoadingButton } from '@mui/lab';
 import { Button } from '@mui/material';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import useValidate from '../../hooks/useValidate';
 import { signUpUser } from '../../store/reducers/auth';
@@ -16,7 +16,8 @@ const SignUpForm = () => {
     valid: true,
     error: false,
     errorText: '',
-    type: 'text'
+    type: 'text',
+    rules: {required: true, testReg: emailRegExp}
   });
   const [password, setPassword] = useState<ValidateInputState>({
     label: 'Пароль',
@@ -27,6 +28,7 @@ const SignUpForm = () => {
     valid: false,
     error: false,
     errorText: '',
+    rules: {required: true, min: 3, max: 10 }
   });
   const [repeatedPassword, setRepeatedPassword] = useState<ValidateInputState>({
     label: 'Повторите пароль',
@@ -37,11 +39,16 @@ const SignUpForm = () => {
     valid: false,
     error: false,
     errorText: '',
+    rules: {required: true, toBe: password.value}
   });
 
-  const isFormValid = useValidate(email.valid, password.valid, repeatedPassword.valid);
+  const isFormValid = useValidate(email, password, repeatedPassword);
   const dispatch = useAppDispatch();
   const { isLoading } = useAppSelector(state => state.auth);
+
+  useEffect(() => {
+    setRepeatedPassword(prev => ({...prev, rules: {...prev.rules, toBe: password.value}}))
+  }, [password.value])
 
   function signUpHandler(e: React.FormEvent) {
     e.preventDefault();
@@ -54,20 +61,17 @@ const SignUpForm = () => {
     <form onSubmit={signUpHandler}>
       <ValidateInput
         validateItem={email}
-        validateRules={{required: true, testReg: emailRegExp}}
-        changeItem={setEmail}
+        changeItemCallback={setEmail}
         disabled={isLoading}
       />
       <ValidateInput
         validateItem={password}
-        validateRules={{required: true, min: 3, max: 10 }}
-        changeItem={setPassword}
+        changeItemCallback={setPassword}
         disabled={isLoading}
       />
       <ValidateInput
         validateItem={repeatedPassword}
-        validateRules={{required: true, toBe: password.value }}
-        changeItem={setRepeatedPassword}
+        changeItemCallback={setRepeatedPassword}
         disabled={isLoading}
       />
 

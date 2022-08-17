@@ -16,7 +16,8 @@ const SignInForm:React.FC = () => {
     valid: true,
     error: false,
     errorText: '',
-    type: 'text'
+    type: 'text',
+    rules: {required: true, testReg: emailRegExp}
   });
   const [password, setPassword] = useState<ValidateInputState>({
     label: 'Пароль',
@@ -27,8 +28,9 @@ const SignInForm:React.FC = () => {
     valid: false,
     error: false,
     errorText: '',
+    rules: {required: true, min: 3, max: 10 }
   });
-  const isFormValid = useValidate(email.valid, password.valid);
+  const isFormValid = useValidate(email, password);
   const dispatch = useAppDispatch();
   const { isLoading } = useAppSelector(state => state.auth);
 
@@ -43,14 +45,12 @@ const SignInForm:React.FC = () => {
     <form onSubmit={signInHandler}>
       <ValidateInput
         validateItem={email}
-        validateRules={{required: true, testReg: emailRegExp}}
-        changeItem={setEmail}
+        changeItemCallback={setEmail}
         disabled={isLoading}
       />
       <ValidateInput
         validateItem={password}
-        validateRules={{required: true, min: 3, max: 10 }}
-        changeItem={setPassword}
+        changeItemCallback={setPassword}
         disabled={isLoading}
       />
 

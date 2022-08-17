@@ -6,6 +6,7 @@ export const authRoutes = () => (
   <>
     <Route path='/contacts' element={<Contacts/>}/>
     <Route path='/contacts/:id' element={<Contacts/>}/>
+    <Route path='/contacts/create' element={<Contacts/>}/>
     <Route path='*' element={<Navigate to='/contacts'/>}/>
   </>
 );

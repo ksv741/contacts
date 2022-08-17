@@ -11,25 +11,25 @@ export interface ValidateInputState {
   valid: boolean;
   error: boolean;
   errorText: string;
-  helperText: string;
+  helperText?: string;
   type: 'text' | 'password';
   color?: 'primary' | 'secondary' | 'error' | 'info' | 'success' | 'warning';
+  rules?: ValidatorRules;
 }
 
 interface ValidateInputProps {
   validateItem: ValidateInputState;
-  validateRules: ValidatorRules;
-  changeItem: Dispatch<React.SetStateAction<ValidateInputState>>
+  changeItemCallback: Dispatch<React.SetStateAction<ValidateInputState>>
   disabled?: boolean;
 }
-const ValidateInput: React.FC<ValidateInputProps> = ({validateItem, validateRules, changeItem, disabled}) => {
-  const {helperText, errorText, error, valid, touched, label, type, color, value} = validateItem;
+const ValidateInput: React.FC<ValidateInputProps> = ({validateItem, changeItemCallback, disabled}) => {
+  const {helperText, errorText, error, valid, touched, label, type, color, value, rules: validateRules} = validateItem;
 
   function inputChangeHandler(e: React.ChangeEvent<HTMLInputElement>) {
     const { value } = e.target;
-    const validatedResult = validator.validateOne({value, rules: validateRules});
+    const validatedResult = validateRules ? validator.validateOne({value, rules: validateRules}) : true;
 
-    changeItem({
+    changeItemCallback({
       ...validateItem,
       value,
       touched: true,
@@ -41,7 +41,7 @@ const ValidateInput: React.FC<ValidateInputProps> = ({validateItem, validateRule
 
   return (
     <TextField
-      helperText={error ? errorText : helperText}
+      helperText={error ? errorText : helperText || ''}
       id={`${label}-helper-text`}
       label={label}
       color={valid ? 'success' : color || 'primary'}

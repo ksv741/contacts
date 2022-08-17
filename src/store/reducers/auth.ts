@@ -1,12 +1,12 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
-import { v4 as uuid } from 'uuid';
 import { IUser } from '../../types/User';
 
 interface AuthState {
   isAuth: boolean;
   isLoading: boolean;
   error: string | boolean;
+  userId?: string
 }
 
 const initialState: AuthState = {
@@ -34,7 +34,7 @@ export const signInUser = createAsyncThunk<
 )
 
 export const signUpUser = createAsyncThunk<
-  {},
+  IUser,
   IUser,
   {rejectValue: string}
   >(
@@ -44,10 +44,9 @@ export const signUpUser = createAsyncThunk<
       const response = await axios.post(`http://localhost:3000/users`, {
         email,
         password,
-        id: uuid(),
         contacts: []
       });
-      return true;
+      return response.data;
     } catch (e) {
       return thunkAPI.rejectWithValue("Ошибка при регистрации нового пользователя")
     }
@@ -60,36 +59,39 @@ export const authSlice = createSlice({
   reducers: {
     signup: () => {}
   },
-  extraReducers: (builder) => {
-    builder.addCase(signInUser.pending, (state) => {
+  extraReducers: {
+    [signInUser.pending.type]: (state) => {
       state.isLoading = true;
       state.error = false;
-    });
-    builder.addCase(signInUser.fulfilled, (state, {payload}) => {
-      if (payload.password === payload.data.password) state.isAuth = true;
+    },
+    [signInUser.fulfilled.type]: (state, {payload}) => {
+      if (payload.password === payload.data.password) {
+        state.isAuth = true;
+        state.userId = payload.data.id
+      }
       else state.error = 'Неправильный пароль';
       state.isLoading = false;
-    });
-    builder.addCase(signInUser.rejected, (state, {payload}) => {
+    },
+    [signInUser.rejected.type]: (state, {payload}) => {
       state.isAuth = false;
       state.isLoading = false;
       state.error = payload || true;
-    });
+    },
 
-    builder.addCase(signUpUser.pending, (state) => {
+    [signUpUser.pending.type]: (state) => {
       state.isLoading = true;
       state.error = false;
-    });
-    builder.addCase(signUpUser.fulfilled, (state) => {
+    },
+    [signUpUser.fulfilled.type]: (state, {payload}) => {
       state.isAuth = true;
+      state.userId = payload.id;
       state.isLoading = false;
-    });
-    builder.addCase(signUpUser.rejected, (state, {payload}) => {
+    },
+    [signUpUser.rejected.type]: (state, {payload}) => {
       state.isAuth = false;
       state.isLoading = false;
       state.error = payload || true;
-    });
+    }
   }
 })
-
 export default authSlice.reducer;

@@ -3,28 +3,70 @@
     {
       "email": "ksv741@mail.ru",
       "password": "123123",
-      "contacts": [
-        {
-          "name": "Vladimir",
-          "surname": "Vladimir",
-          "phone": "88005553535",
-          "email": "putin@mail.ru",
-          "id": "president-of-russia"
-        }
-      ]
+      "id": "first-id"
     },
     {
-      "email": "test@mail.ru",
+      "email": "test111@mail.ru",
       "password": "123123",
-      "contacts": [
-        {
-          "name": "Barack",
-          "surname": "Obama",
-          "phone": "+1800500123",
-          "email": "obama@gmail.com",
-          "id": "president-of-usa"
-        }
-      ]
+      "id": "second-id"
+    },
+    {
+      "email": "admin@admin.ru",
+      "password": "123",
+      "contacts": [],
+      "id": "ae6dsny"
+    },
+    {
+      "email": "some@mail.ru",
+      "password": "123123",
+      "contacts": [],
+      "id": "BMHKR4R"
+    }
+  ],
+  "contacts": [
+    {
+      "name": "Vladimir",
+      "surname": "Putin",
+      "phone": "88005553535",
+      "email": "putin@mail.ru",
+      "id": "president-of-russia",
+      "user_id": "second-id"
+    },
+    {
+      "email": "obama@gmail.com",
+      "surname": "Obama2",
+      "phone": "+1800500123",
+      "name": "Barack1",
+      "user_id": "first-id",
+      "id": "president-of-usa"
+    },
+    {
+      "name": "testName",
+      "id": "Bm4B8i0"
+    },
+    {
+      "email": "ad",
+      "surname": "asd",
+      "phone": "ads",
+      "name": "asd",
+      "user_id": "BMHKR4R",
+      "id": "SXIW7Vh"
+    },
+    {
+      "email": "asd",
+      "surname": "asd",
+      "phone": "asd",
+      "name": "asd",
+      "user_id": "BMHKR4R",
+      "id": "K90a1An"
+    },
+    {
+      "email": "dd",
+      "surname": "asd",
+      "phone": "asdd",
+      "name": "asd",
+      "user_id": "BMHKR4R",
+      "id": "UeAd6Yv"
     }
   ]
 }
