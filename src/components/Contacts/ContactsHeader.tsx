@@ -8,17 +8,17 @@ import { contactsSlice } from '../../store/reducers/contacts';
 
 const ContactsHeader = () => {
   const dispatch = useAppDispatch();
-  const {create} = contactsSlice.actions;
+  const { create } = contactsSlice.actions;
 
   return (
     <>
-      <Typography variant="h3" component="h3">
-        <ContactsIcon fontSize='large'/>
+      <Typography variant='h3' component='h3'>
+        <ContactsIcon fontSize='large' />
         Контакты:
       </Typography>
-      <Link to='/contacts/create' style={{textDecoration: 'none'}}>
-        <Button onClick={() => dispatch(create())} variant='outlined' sx={{width: '100%'}}>
-          <AddCircleSharpIcon/>
+      <Link to='/contacts/create' style={{ textDecoration: 'none' }}>
+        <Button onClick={() => dispatch(create())} variant='outlined' sx={{ width: '100%' }}>
+          <AddCircleSharpIcon />
           Создать контакт
         </Button>
       </Link>

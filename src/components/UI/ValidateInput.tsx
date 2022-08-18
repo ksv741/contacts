@@ -1,8 +1,7 @@
 import { TextField } from '@mui/material';
 import React, { Dispatch } from 'react';
-import { ValidatorRules } from '../types/Validator';
-import validator from '../utils/validator';
-
+import { ValidatorRules } from '../../types/Validator';
+import validator from '../../utils/validator';
 
 export interface ValidateInputState {
   label: string;

@@ -1,6 +1,9 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { IContact } from '../../types/Contact';
+import { alertSlice } from './alert';
+
+const {show} = alertSlice.actions;
 
 export type ModeType = 'none' | 'create' | 'edit';
 
@@ -34,7 +37,8 @@ export const getContactList = createAsyncThunk<
       const response = await axios.get<IContact[]>(`http://localhost:3000/contacts?user_id=${userId}`);
       return {list: response.data, currentId: selectedUserId}
     } catch (e) {
-      return thunkAPI.rejectWithValue("Не удалось загрузить список контактов")
+      thunkAPI.dispatch(show({text: 'Не удалось загрузить список контактов', type: 'error'}));
+      return thunkAPI.rejectWithValue('Не удалось загрузить список контактов');
     }
   }
 )
@@ -50,9 +54,11 @@ export const createContact = createAsyncThunk<
       // @ts-ignore
       contact.user_id = thunkAPI.getState().auth.userId;
       const response = await axios.post<IContact>(`http://localhost:3000/contacts`, contact);
-      if (!response.data.id) return thunkAPI.rejectWithValue('Не удалось добавить контакт')
+      if (!response.data.id) return thunkAPI.rejectWithValue('Не удалось добавить контакт');
+      thunkAPI.dispatch(show({text: 'Конакт успешно создан', type: 'success'}));
       return response.data;
     } catch (e) {
+      thunkAPI.dispatch(show({text: 'Ошибка при создании контакта', type: 'error'}));
       return thunkAPI.rejectWithValue('Ошибка при создании контакта')
     }
   }
@@ -70,9 +76,11 @@ export const updateContact = createAsyncThunk<
       // @ts-ignore
       data.user_id = thunkAPI.getState().auth.userId;
       const response = await axios.put<IContact>(`http://localhost:3000/contacts/${id}`, data);
-      if (!response.data.id) return thunkAPI.rejectWithValue('Не удалось изменить контакт')
+      if (!response.data.id) return thunkAPI.rejectWithValue('Не удалось изменить контакт');
+      thunkAPI.dispatch(show({text: 'Конакт обновлен', type: 'success'}));
       return response.data;
     } catch (e) {
+      thunkAPI.dispatch(show({text: 'Ошибка при изменении контакта', type: 'error'}));
       return thunkAPI.rejectWithValue('Ошибка при изменении контакта')
     }
   }
@@ -88,13 +96,14 @@ export const removeContact = createAsyncThunk<
       // TODO
       // @ts-ignore
       await axios.delete<IContact>(`http://localhost:3000/contacts/${id}`);
+      thunkAPI.dispatch(show({text: 'Контакт успешно удален', type: 'success'}));
       return id;
     } catch (e) {
+      thunkAPI.dispatch(show({text: 'Ошибка при удалении контакта', type: 'error'}));
       return thunkAPI.rejectWithValue('Ошибка при удалении контакта')
     }
   }
 )
-
 
 export const contactsSlice = createSlice({
   name: 'contacts',
@@ -154,7 +163,7 @@ export const contactsSlice = createSlice({
       state.error = false;
     },
     [updateContact.fulfilled.type]: (state, {payload}) => {
-      const idx = state.contacts.findIndex(el => el.id == payload.id);
+      const idx = state.contacts.findIndex(el => el.id === payload.id);
       state.contacts[idx] = payload;
       state.currentContact = payload;
       state.actionContactsLoading = false;
@@ -170,7 +179,7 @@ export const contactsSlice = createSlice({
       state.error = false;
     },
     [removeContact.fulfilled.type]: (state, {payload}) => {
-      const idx = state.contacts.findIndex(el => el.id == payload);
+      const idx = state.contacts.findIndex(el => el.id === payload);
       state.contacts.splice(idx, 1);
       delete state.currentContact;
       state.actionContactsLoading = false;

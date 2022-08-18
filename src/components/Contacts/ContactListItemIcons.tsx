@@ -12,14 +12,14 @@ interface ContactListItemIconsProps {
   contact: IContact;
 }
 
-const ContactListItemIcons: React.FC<ContactListItemIconsProps> = ({show, contact}) => {
-  const {id} = useParams();
+const ContactListItemIcons: React.FC<ContactListItemIconsProps> = ({ show, contact }) => {
+  const { id } = useParams();
   const navigator = useNavigate();
 
-  const {mode} = useAppSelector(state => state.contacts);
+  const { mode } = useAppSelector(state => state.contacts);
   const dispatch = useAppDispatch();
 
-  const {select, edit} = contactsSlice.actions;
+  const { select, edit } = contactsSlice.actions;
 
   function itemEditIconClickHandler(e: React.MouseEvent) {
     if (contact.id !== id) {
@@ -41,11 +41,12 @@ const ContactListItemIcons: React.FC<ContactListItemIconsProps> = ({show, contac
 
   return (
     <>
-      <IconButton aria-label="Remove" onClickCapture={itemEditIconClickHandler} >
-        {((contact.id === id) && mode === 'edit' || show) && <EditIcon cursor={'pointer'} fontSize='medium' color="primary"/>}
+      <IconButton aria-label='Remove' onClickCapture={itemEditIconClickHandler}>
+        {((contact.id === id) && mode === 'edit' || show) &&
+          <EditIcon cursor={'pointer'} fontSize='medium' color='primary' />}
       </IconButton>
-      <IconButton aria-label="Remove">
-        {show && <DeleteIcon color="error" onClickCapture={itemDeleteIconClickHandler}/>}
+      <IconButton aria-label='Remove'>
+        {show && <DeleteIcon color='error' onClickCapture={itemDeleteIconClickHandler} />}
       </IconButton>
     </>
   );

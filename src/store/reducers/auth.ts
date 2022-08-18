@@ -1,6 +1,9 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { IUser } from '../../types/User';
+import { alertSlice } from './alert';
+
+const {show} = alertSlice.actions;
 
 interface AuthState {
   isAuth: boolean;
@@ -17,26 +20,31 @@ const initialState: AuthState = {
 
 export const signInUser = createAsyncThunk<
   {password: string, data: IUser},
-  {email: string, password: string},
-  {rejectValue: string}
+  {email: string, password: string}
   >(
   'auth/signIn',
   async ({email, password}, thunkAPI) => {
     try {
       const response = await axios.get<IUser[]>(`http://localhost:3000/users?email=${email}&_limit=1`);
-      if (response.data[0] == null) return thunkAPI.rejectWithValue('Пользователь с такой почтой не найден');
-
+      if (response.data[0] == null) {
+        thunkAPI.dispatch(show({text: 'Пользователь с такой почтой не найден', type: 'warning'}));
+        return thunkAPI.rejectWithValue('Пользователь с такой почтой не найден');
+      }
+      if (password !== response.data[0].password) {
+        thunkAPI.dispatch(show({text: 'Неправильный пароль', type: 'error'}));
+        return thunkAPI.rejectWithValue('Неправильный пароль');
+      }
       return {password, data: response.data[0]}
     } catch (e) {
-      return thunkAPI.rejectWithValue("Не удалось загрузить пользователя")
+      thunkAPI.dispatch(show({text: 'Не удалось загрузить пользователя', type: 'error'}));
+      return thunkAPI.rejectWithValue('Не удалось загрузить пользователя')
     }
   }
 )
 
 export const signUpUser = createAsyncThunk<
   IUser,
-  IUser,
-  {rejectValue: string}
+  IUser
   >(
   'auth/signUp',
   async ({email, password}, thunkAPI) => {
@@ -48,7 +56,8 @@ export const signUpUser = createAsyncThunk<
       });
       return response.data;
     } catch (e) {
-      return thunkAPI.rejectWithValue("Ошибка при регистрации нового пользователя")
+      thunkAPI.dispatch(show({text: 'Ошибка при регистрации нового пользователя', type: 'error'}));
+      return thunkAPI.rejectWithValue('Ошибка при регистрации нового пользователя')
     }
   }
 )
@@ -65,11 +74,8 @@ export const authSlice = createSlice({
       state.error = false;
     },
     [signInUser.fulfilled.type]: (state, {payload}) => {
-      if (payload.password === payload.data.password) {
-        state.isAuth = true;
-        state.userId = payload.data.id
-      }
-      else state.error = 'Неправильный пароль';
+      state.isAuth = true;
+      state.userId = payload.data.id
       state.isLoading = false;
     },
     [signInUser.rejected.type]: (state, {payload}) => {
@@ -92,6 +98,6 @@ export const authSlice = createSlice({
       state.isLoading = false;
       state.error = payload || true;
     }
-  }
+  },
 })
 export default authSlice.reducer;

@@ -6,7 +6,7 @@ import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import { UseValidate } from '../../hooks/useValidate';
 import { createContact, ModeType, updateContact } from '../../store/reducers/contacts';
 import { IContact } from '../../types/Contact';
-import ValidateInput, { ValidateInputState } from '../ValidateInput';
+import ValidateInput, { ValidateInputState } from '../UI/ValidateInput';
 
 interface ContactInfoProps {
   currentContact?: IContact;
@@ -15,7 +15,7 @@ interface ContactInfoProps {
 
 const ContactInfo: React.FC<ContactInfoProps> = () => {
   const dispatch = useAppDispatch();
-  const {currentContact, mode, actionContactsLoading} = useAppSelector(state => state.contacts);
+  const { currentContact, mode, actionContactsLoading } = useAppSelector(state => state.contacts);
 
   const [isEditable, setIsEditable] = useState(false);
   const [title, setTitle] = useState('Данные о контакте:');
@@ -28,7 +28,7 @@ const ContactInfo: React.FC<ContactInfoProps> = () => {
     valid: false,
     error: false,
     errorText: '',
-    rules: {required: true}
+    rules: { required: true }
   });
   const [surname, setSurname] = useState<ValidateInputState>({
     label: 'Фамилия',
@@ -37,7 +37,7 @@ const ContactInfo: React.FC<ContactInfoProps> = () => {
     touched: false,
     valid: false,
     error: false,
-    errorText: '',
+    errorText: ''
   });
   const [phone, setPhone] = useState<ValidateInputState>({
     label: 'Телефон',
@@ -47,7 +47,7 @@ const ContactInfo: React.FC<ContactInfoProps> = () => {
     valid: false,
     error: false,
     errorText: '',
-    rules: {required: true}
+    rules: { required: true }
   });
   const [email, setEmail] = useState<ValidateInputState>({
     label: 'Почта',
@@ -56,16 +56,16 @@ const ContactInfo: React.FC<ContactInfoProps> = () => {
     touched: false,
     valid: false,
     error: false,
-    errorText: '',
+    errorText: ''
   });
 
   const isFormValid = UseValidate(name, phone);
 
   useEffect(() => {
-    setName({...name, value: currentContact?.name || ''});
-    setPhone({...phone, value: currentContact?.phone || ''});
-    setSurname({...surname, value: currentContact?.surname || ''});
-    setEmail({...email, value: currentContact?.email || ''});
+    setName({ ...name, value: currentContact?.name || '' });
+    setPhone({ ...phone, value: currentContact?.phone || '' });
+    setSurname({ ...surname, value: currentContact?.surname || '' });
+    setEmail({ ...email, value: currentContact?.email || '' });
   }, [currentContact]);
 
   useEffect(() => {
@@ -83,7 +83,7 @@ const ContactInfo: React.FC<ContactInfoProps> = () => {
         setTitle('Данные о контакте');
         setIsEditable(false);
     }
-  }, [mode])
+  }, [mode]);
 
 
   if (!currentContact) return null;
@@ -91,30 +91,36 @@ const ContactInfo: React.FC<ContactInfoProps> = () => {
   function saveCreateHandler(e: React.MouseEvent) {
     switch (mode) {
       case 'create':
-        dispatch(createContact({email: email.value, surname: surname.value, phone: phone.value, name: name.value}))
+        dispatch(createContact({ email: email.value, surname: surname.value, phone: phone.value, name: name.value }));
         break;
       case 'edit':
-        dispatch(updateContact({email: email.value, surname: surname.value, phone: phone.value, name: name.value, id: currentContact?.id}))
+        dispatch(updateContact({
+          email: email.value,
+          surname: surname.value,
+          phone: phone.value,
+          name: name.value,
+          id: currentContact?.id
+        }));
         break;
     }
   }
 
   return (
-    <Stack spacing={2} sx={{p: 3}}>
-      <Typography variant="h5" component="h5">{title}</Typography>
+    <Stack spacing={2} sx={{ p: 3 }}>
+      <Typography variant='h5' component='h5'>{title}</Typography>
 
-      <ValidateInput changeItemCallback={setName} validateItem={name} disabled={!isEditable}/>
-      <ValidateInput changeItemCallback={setSurname} validateItem={surname} disabled={!isEditable}/>
-      <ValidateInput changeItemCallback={setPhone} validateItem={phone} disabled={!isEditable}/>
-      <ValidateInput changeItemCallback={setEmail} validateItem={email} disabled={!isEditable}/>
+      <ValidateInput changeItemCallback={setName} validateItem={name} disabled={!isEditable} />
+      <ValidateInput changeItemCallback={setSurname} validateItem={surname} disabled={!isEditable} />
+      <ValidateInput changeItemCallback={setPhone} validateItem={phone} disabled={!isEditable} />
+      <ValidateInput changeItemCallback={setEmail} validateItem={email} disabled={!isEditable} />
 
       {isEditable && (
         <LoadingButton
           loading={actionContactsLoading}
-          loadingPosition="start"
+          loadingPosition='start'
           startIcon={<SaveIcon />}
-          variant="outlined"
-          sx={{alignSelf: 'flex-start'}}
+          variant='outlined'
+          sx={{ alignSelf: 'flex-start' }}
           onClick={saveCreateHandler}
           disabled={!isFormValid}
         >

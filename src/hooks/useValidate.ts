@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { ValidateInputState } from '../components/ValidateInput';
+import { ValidateInputState } from '../components/UI/ValidateInput';
 import validator from '../utils/validator';
 
 export const UseValidate = (...params: ValidateInputState[]) => {

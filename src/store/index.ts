@@ -1,10 +1,12 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit'
 import auth from './reducers/auth'
 import contacts from './reducers/contacts'
+import alert from './reducers/alert'
 
 const rootReducer = combineReducers({
   auth,
-  contacts
+  contacts,
+  alert
 })
 
 export const setupStore = () => {

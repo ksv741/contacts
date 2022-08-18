@@ -1,10 +1,12 @@
+import SearchIcon from '@mui/icons-material/Search';
 import { CircularProgress, Grid } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { useParams, useSearchParams } from 'react-router-dom';
 import ContactInfo from '../../components/Contacts/ContactInfo';
 import ContactList from '../../components/Contacts/ContactList';
 import ContactsHeader from '../../components/Contacts/ContactsHeader';
-import SearchInput from '../../components/SearchInput';
+import { ErrorBoundary } from '../../components/UI/ErrorBoundary';
+import SearchInput from '../../components/UI/SearchInput';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import { getContactList } from '../../store/reducers/contacts';
 import { IContact } from '../../types/Contact';
@@ -13,7 +15,7 @@ const Contacts: React.FC = () => {
   const {id} = useParams();
   const [searchParams, setSearchParams] = useSearchParams();
 
-  const {getContactsLoading} = useAppSelector(state => state.contacts);
+  const {getContactsLoading, error} = useAppSelector(state => state.contacts);
   const {contacts} = useAppSelector(state => state.contacts);
   const dispatch = useAppDispatch();
 
@@ -44,20 +46,22 @@ const Contacts: React.FC = () => {
     setFilteredContacts(filterContacts(search));
   }, [contacts, search])
 
+  useEffect(() => {
+    if (error) throw new Error(typeof error === 'boolean' ? 'Произошла ошибка' : error)
+  }, [error])
+
   return (
-    <div>
-      <Grid container>
-        <Grid item={true} xs={2}>
-          <ContactsHeader/>
-          <SearchInput onChange={contactSearchHandler} defaultValue={search}/>
-          { getContactsLoading ? <CircularProgress /> : <ContactList list={filteredContacts}/>}
-        </Grid>
-        <Grid item={true} xs={10}>
-          <ContactInfo/>
-        </Grid>
+    <Grid container>
+      <Grid item={true} xs={2}>
+        <ContactsHeader/>
+        <SearchInput onChange={contactSearchHandler} defaultValue={search} placeholder='Найти контакт' icon={<SearchIcon/>}/>
+        { getContactsLoading ? <CircularProgress /> : <ContactList list={filteredContacts}/>}
       </Grid>
-    </div>
+      <Grid item={true} xs={10}>
+        <ContactInfo/>
+      </Grid>
+    </Grid>
   );
 };
 
-export default Contacts;
+export default () => <ErrorBoundary><Contacts/></ErrorBoundary>;
