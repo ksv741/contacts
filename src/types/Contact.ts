@@ -3,6 +3,6 @@ export interface IContact {
   surname?: string;
   phone: string;
   email?: string;
-  id?: string;
+  id?: string | number;
   user_id?: string;
 }

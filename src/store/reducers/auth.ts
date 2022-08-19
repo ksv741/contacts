@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { IUser } from '../../types/User';
+import { serverURL } from '../../utils/constants';
 import { alertSlice } from './alert';
 
 const {show} = alertSlice.actions;
@@ -25,7 +26,7 @@ export const signInUser = createAsyncThunk<
   'auth/signIn',
   async ({email, password}, thunkAPI) => {
     try {
-      const response = await axios.get<IUser[]>(`http://localhost:3000/users?email=${email}&_limit=1`);
+      const response = await axios.get<IUser[]>(`${serverURL}/users?email=${email}&_limit=1`);
       if (response.data[0] == null) {
         thunkAPI.dispatch(show({text: 'Пользователь с такой почтой не найден', type: 'warning'}));
         return thunkAPI.rejectWithValue('Пользователь с такой почтой не найден');

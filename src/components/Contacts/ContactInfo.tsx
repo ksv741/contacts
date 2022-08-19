@@ -1,21 +1,26 @@
 import SaveIcon from '@mui/icons-material/Save';
 import LoadingButton from '@mui/lab/LoadingButton/LoadingButton';
-import { Stack, Typography } from '@mui/material';
+import { CircularProgress, Stack, Typography } from '@mui/material';
 import React, { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import { UseValidate } from '../../hooks/useValidate';
-import { createContact, ModeType, updateContact } from '../../store/reducers/contacts';
-import { IContact } from '../../types/Contact';
+import { contactsSlice } from '../../store/reducers/contacts';
+import { contactsApi } from '../../store/service/contacts';
 import ValidateInput, { ValidateInputState } from '../UI/ValidateInput';
 
-interface ContactInfoProps {
-  currentContact?: IContact;
-  mode?: ModeType;
-}
+const ContactInfo: React.FC = () => {
+  const location = useLocation();
 
-const ContactInfo: React.FC<ContactInfoProps> = () => {
   const dispatch = useAppDispatch();
-  const { currentContact, mode, actionContactsLoading } = useAppSelector(state => state.contacts);
+  const { mode, currentContactId } = useAppSelector(state => state.contacts);
+  const { userId } = useAppSelector(state => state.auth);
+  const { data, isLoading } = contactsApi.useGetContactListQuery(userId || '');
+  const [createContact, {isLoading: createContactLoading}] = contactsApi.useCreateContactMutation();
+  const [updateContact, {isLoading: updateContactLoading}] = contactsApi.useUpdateContactMutation();
+  const {create} = contactsSlice.actions;
+
+  const [currentContact, setCurrentContact] = useState(data?.find(el => el.id == currentContactId));
 
   const [isEditable, setIsEditable] = useState(false);
   const [title, setTitle] = useState('Данные о контакте:');
@@ -61,12 +66,20 @@ const ContactInfo: React.FC<ContactInfoProps> = () => {
 
   const isFormValid = UseValidate(name, phone);
 
+
   useEffect(() => {
-    setName({ ...name, value: currentContact?.name || '' });
-    setPhone({ ...phone, value: currentContact?.phone || '' });
-    setSurname({ ...surname, value: currentContact?.surname || '' });
-    setEmail({ ...email, value: currentContact?.email || '' });
-  }, [currentContact]);
+    location.pathname.split('/')[2] === 'create' && dispatch(create())
+  }, [])
+
+  useEffect(() => {
+    const candidate = data?.find(el => el.id == currentContactId);
+    currentContactId && setCurrentContact(candidate);
+
+    setName({ ...name, value: candidate?.name || '' });
+    setPhone({ ...phone, value: candidate?.phone || '' });
+    setSurname({ ...surname, value: candidate?.surname || '' });
+    setEmail({ ...email, value: candidate?.email || '' });
+  }, [currentContactId, data]);
 
   useEffect(() => {
     switch (mode) {
@@ -85,25 +98,26 @@ const ContactInfo: React.FC<ContactInfoProps> = () => {
     }
   }, [mode]);
 
-
-  if (!currentContact) return null;
-
-  function saveCreateHandler(e: React.MouseEvent) {
+  function saveCreateHandler() {
     switch (mode) {
       case 'create':
-        dispatch(createContact({ email: email.value, surname: surname.value, phone: phone.value, name: name.value }));
+        createContact({ email: email.value, surname: surname.value, phone: phone.value, name: name.value, user_id: userId });
         break;
       case 'edit':
-        dispatch(updateContact({
+        updateContact({
+          ...currentContact,
           email: email.value,
           surname: surname.value,
           phone: phone.value,
           name: name.value,
-          id: currentContact?.id
-        }));
+        })
         break;
     }
   }
+
+  if (!currentContactId && mode !== 'create') return null;
+
+  if (isLoading) return <CircularProgress />;
 
   return (
     <Stack spacing={2} sx={{ p: 3 }}>
@@ -116,7 +130,7 @@ const ContactInfo: React.FC<ContactInfoProps> = () => {
 
       {isEditable && (
         <LoadingButton
-          loading={actionContactsLoading}
+          loading={createContactLoading || updateContactLoading}
           loadingPosition='start'
           startIcon={<SaveIcon />}
           variant='outlined'

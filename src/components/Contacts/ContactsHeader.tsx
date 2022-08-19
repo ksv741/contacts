@@ -10,6 +10,10 @@ const ContactsHeader = () => {
   const dispatch = useAppDispatch();
   const { create } = contactsSlice.actions;
 
+  function createContactClickHandler() {
+    dispatch(create());
+  }
+
   return (
     <>
       <Typography variant='h3' component='h3'>
@@ -17,7 +21,7 @@ const ContactsHeader = () => {
         Контакты:
       </Typography>
       <Link to='/contacts/create' style={{ textDecoration: 'none' }}>
-        <Button onClick={() => dispatch(create())} variant='outlined' sx={{ width: '100%' }}>
+        <Button onClick={createContactClickHandler} variant='outlined' sx={{ width: '100%' }}>
           <AddCircleSharpIcon />
           Создать контакт
         </Button>

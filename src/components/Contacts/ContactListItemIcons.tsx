@@ -4,7 +4,8 @@ import { IconButton } from '@mui/material';
 import React from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
-import { contactsSlice, removeContact } from '../../store/reducers/contacts';
+import { contactsSlice } from '../../store/reducers/contacts';
+import { contactsApi } from '../../store/service/contacts';
 import { IContact } from '../../types/Contact';
 
 interface ContactListItemIconsProps {
@@ -19,23 +20,21 @@ const ContactListItemIcons: React.FC<ContactListItemIconsProps> = ({ show, conta
   const { mode } = useAppSelector(state => state.contacts);
   const dispatch = useAppDispatch();
 
-  const { select, edit } = contactsSlice.actions;
+  const { edit } = contactsSlice.actions;
+  const [removeContact] = contactsApi.useRemoveContactMutation();
 
   function itemEditIconClickHandler(e: React.MouseEvent) {
-    if (contact.id !== id) {
-      dispatch(select(contact));
-    }
-    dispatch(edit());
-
     e.preventDefault();
     e.stopPropagation();
+
+    contact.id && dispatch(edit(contact.id));
   }
 
   function itemDeleteIconClickHandler(e: React.MouseEvent) {
     e.preventDefault();
     e.stopPropagation();
 
-    contact.id && dispatch(removeContact(contact.id));
+    contact.id && removeContact(contact.id);
     navigator('/contacts');
   }
 

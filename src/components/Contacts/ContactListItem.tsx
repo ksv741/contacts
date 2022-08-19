@@ -1,23 +1,15 @@
 import { Avatar, ListItemAvatar, ListItemButton, ListItemText } from '@mui/material';
 import React, { useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
-import { useAppDispatch, useAppSelector } from '../../hooks/redux';
-import { contactsSlice } from '../../store/reducers/contacts';
+import { Link } from 'react-router-dom';
 import { IContact } from '../../types/Contact';
 import ContactListItemIcons from './ContactListItemIcons';
 
 interface ContactListItemProps {
   contact: IContact;
+  active?: boolean;
 }
 
-const ContactListItem: React.FC<ContactListItemProps> = ({contact}) => {
-  const {id} = useParams();
-
-  const {currentContact} = useAppSelector(state => state.contacts);
-  const dispatch = useAppDispatch();
-
-  const {select} = contactsSlice.actions;
-
+const ContactListItem: React.FC<ContactListItemProps> = ({contact, active}) => {
   const [isHovered, setIsHovered] = useState(false);
 
   function hoverHandler(e: React.MouseEvent) {
@@ -31,15 +23,9 @@ const ContactListItem: React.FC<ContactListItemProps> = ({contact}) => {
     }
   }
 
-  function itemClickHandler(e: React.MouseEvent) {
-    if (contact.id !== id) {
-      dispatch(select(contact));
-    }
-  }
-
   return (
     <Link to={`/contacts/${contact.id}`} style={{textDecoration: 'none', color: '#000'}}>
-      <ListItemButton selected={contact?.id === currentContact?.id} onClick={itemClickHandler} onMouseEnter={hoverHandler} onMouseLeave={hoverHandler}>
+      <ListItemButton selected={active} onMouseEnter={hoverHandler} onMouseLeave={hoverHandler}>
         <ListItemAvatar>
           <Avatar>{contact.name[0] + (contact?.surname?.[0] || '')}</Avatar>
         </ListItemAvatar>
