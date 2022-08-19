@@ -1,26 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="b194e7ff-76ad-4232-b6de-1d8c253de566" name="Changes" comment="add create, update, remove contacts function">
-      <change afterPath="$PROJECT_DIR$/src/components/Contacts/ContactInfo.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/Contacts/ContactList.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/Contacts/ContactListItem.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/Contacts/ContactListItemIcons.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/Contacts/ContactsHeader.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    <list default="true" id="b194e7ff-76ad-4232-b6de-1d8c253de566" name="Changes" comment="remove files">
       <change beforePath="$PROJECT_DIR$/mockDataBase.json" beforeDir="false" afterPath="$PROJECT_DIR$/mockDataBase.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/AuthorizationForms/SignInForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/AuthorizationForms/SignInForm.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/AuthorizationForms/SignUpForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/AuthorizationForms/SignUpForm.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/ValidateInput.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/ValidateInput.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/hooks/useValidate.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/hooks/useValidate.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/Contacts/Contacts.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Contacts/Contacts.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/router/authRoutes.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/router/authRoutes.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/store/reducers/auth.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/reducers/auth.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/store/reducers/contacts.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/reducers/contacts.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/types/Contact.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/types/Contact.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/types/User.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/types/User.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -43,18 +25,18 @@
     <option name="showLibraryContents" value="true" />
     <option name="sortByType" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "C:/Users/Sergey/Projects/Others/takeoff-test/src",
-    "nodejs_package_manager_path": "yarn",
-    "settings.editor.selected.configurable": "preferences.lookFeel",
-    "ts.external.directory.path": "C:\\Users\\Sergey\\Projects\\Others\\takeoff-test\\node_modules\\typescript\\lib",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/Sergey/Projects/Others/takeoff-test/src&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;yarn&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.lookFeel&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;C:\\Users\\Sergey\\Projects\\Others\\takeoff-test\\node_modules\\typescript\\lib&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\Sergey\Projects\Others\takeoff-test\src\pages\Contacts" />
@@ -162,7 +144,14 @@
       <workItem from="1660720702343" duration="9000" />
       <workItem from="1660720895192" duration="22633000" />
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="remove files">
+      <created>1660877453219</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1660877453219</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -185,6 +174,11 @@
     <MESSAGE value="add sig in logic" />
     <MESSAGE value="add sig up logic" />
     <MESSAGE value="add create, update, remove contacts function" />
-    <option name="LAST_COMMIT_MESSAGE" value="add create, update, remove contacts function" />
+    <MESSAGE value="remove files" />
+    <option name="LAST_COMMIT_MESSAGE" value="remove files" />
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
   </component>
 </project>
